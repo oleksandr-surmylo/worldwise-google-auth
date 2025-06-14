@@ -7,8 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signInWithRedirect,
-    getRedirectResult
+    signInWithPopup
 } from "firebase/auth";
 import { auth, provider } from "../../utils/firebase/firebase.utils";
 import { User } from "../../contexts/AuthContextType";
@@ -37,13 +36,6 @@ const AuthForm = () => {
     const switchLink = isLoginPage ? '/register' : '/login';
     const switchText = isLoginPage ? 'Sign up' : 'Sign in';
 
-    useEffect ( () => {
-        ( async function () {
-            const response = await getRedirectResult ( auth )
-            console.log ( response )
-        } ) ()
-    }, [] );
-
 
     useEffect ( () => {
         if ( isAuthenticated ) {
@@ -63,20 +55,18 @@ const AuthForm = () => {
         provider.setCustomParameters ( {
             prompt: 'select_account'
         } );
-
         try {
             setIsLoading ( true )
-            const result = await signInWithRedirect ( auth, provider )
-
-            // const user: User = result.user;
-            // if ( user !== null ) {
-            //     const { displayName, photoURL } = user;
-            //     const userData = {
-            //         displayName: displayName ?? 'User',
-            //         photoURL: photoURL ?? 'https://i.pravatar.cc/100?u=zz',
-            //     }
-            //     login ( userData )
-            // }
+            const result = await signInWithPopup ( auth, provider )
+            const user: User = result.user;
+            if ( user ) {
+                const { displayName, photoURL } = user;
+                const userData = {
+                    displayName: displayName ?? 'User',
+                    photoURL: photoURL ?? 'https://i.pravatar.cc/100?u=zz',
+                }
+                login ( userData )
+            }
         } catch ( err: unknown ) {
             if ( err instanceof Error ) {
                 if ( err.message === 'auth/popup-closed-by-user' ) {
@@ -106,14 +96,14 @@ const AuthForm = () => {
             } else if ( isRegisterPage ) {
                 result = await createUserWithEmailAndPassword ( auth, email, password )
             }
-            if ( result?.user ) {
-                const { displayName, photoURL } = result?.user;
+            if ( result && result.user ) {
+                const { displayName, photoURL } = result.user;
                 const userData: User = {
                     displayName: displayName ?? 'User',
                     photoURL: photoURL ?? 'https://i.pravatar.cc/100?u=zz',
                 };
                 login ( userData );
-            }
+            } else return
         } catch ( err: unknown ) {
             if ( err instanceof Error ) {
                 setError ( err.message )
@@ -126,7 +116,7 @@ const AuthForm = () => {
     }
 
     return (
-        <form className={ styles.form } onSubmit={ handleSubmit }>
+        <form className="bg-[var(--color-dark--2)] rounded-[7px] p-8 px-12 flex flex-col gap-8 w-[42rem] sm:w-[48rem] mt-60 mx-auto backdrop-blur-[20px]" onSubmit={ handleSubmit }>
             <h1 className={ styles.title }>
                 { title }
             </h1>

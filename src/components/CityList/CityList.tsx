@@ -1,5 +1,3 @@
-import React from 'react';
-import styles from './CityList.module.css'
 import Spinner from "../Spinner/Spinner";
 import CityItem from "../CityItem/CityItem";
 import Message from "../Message/Message";
@@ -21,9 +19,9 @@ const CityList = () => {
     if ( !cities.length ) return <Message message={ text }/>
 
     return (
-        <ul className={ styles.cityList }>
+        <ul className="flex mx-auto gap-[2rem] max-w-full sm:max-w-8/10 lg:max-w-full lg:gap-[1.4rem] flex-col w-full list-none overflow-y-auto overflow-x-hidden">
             { cities.map ( city => (
-                <CityItem key={ city.id } city={ city } />
+                <CityItem key={ city.id } city={ city }/>
             ) ) }
         </ul>
     );

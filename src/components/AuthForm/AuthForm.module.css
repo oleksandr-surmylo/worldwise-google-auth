@@ -71,7 +71,7 @@
 
 .gsiBtnIcon {
     width: 20px;
-    margin-right: 10px;
+    margin-right: 0.6rem;
 }
 
 .gsiBtnWrapper {
@@ -82,7 +82,8 @@
 
 .gsiBtnContents {
     font-family: 'Roboto', arial, sans-serif;
-    font-size: 14px;
+    color: var(--color-dark--2);
+    font-size: 1.2rem;
     font-weight: 500;
     letter-spacing: 0.25px;
 }

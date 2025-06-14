@@ -20,18 +20,18 @@
   height: 4rem;
 }
 
-.user button {
-  background-color: var(--color-dark--2);
-  border-radius: 7px;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  color: inherit;
-  font-family: inherit;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-}
+/*.user button {*/
+/*  background-color: var(--color-dark--2);*/
+/*  border-radius: 7px;*/
+/*  border: none;*/
+/*  padding: 0.6rem 1.2rem;*/
+/*  color: inherit;*/
+/*  font-family: inherit;*/
+/*  font-size: 1.2rem;*/
+/*  font-weight: 700;*/
+/*  text-transform: uppercase;*/
+/*  cursor: pointer;*/
+/*}*/
 
 .text {
   margin-right: 5px;

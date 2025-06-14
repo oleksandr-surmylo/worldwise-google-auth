@@ -13,7 +13,7 @@ import BackButton from "../BackButton/BackButton";
 import { useCitiesContext } from "../../contexts/CitiesContext/CitiesContext";
 import { useNavigate } from "react-router";
 
-// export function convertToEmoji ( countryCode: any ) {
+// export function convertToEmoji ( countryCode: string ) {
 //     const codePoints = countryCode
 //         .toUpperCase ()
 //         .split ( "" )
@@ -62,6 +62,7 @@ function Form () {
         } ) ();
     }, [ lat, lng ] );
 
+
     async function handleSubmit ( e: FormEvent<HTMLFormElement> ) {
         e.preventDefault ()
         if ( !cityName || !date ) return
@@ -77,10 +78,6 @@ function Form () {
         navigate ( "/app/cities" )
     }
 
-    if ( isLoadingGeocoding ) {
-        return <Spinner/>;
-    }
-
     if ( !lat && !lng ) {
         return <Message message='Start by clicking somewhere on the map'/>
     }
@@ -90,41 +87,48 @@ function Form () {
     }
 
     return (
-        <form className={ `${ styles.form } ${ isLoading ? styles.loading : "" }` } onSubmit={ handleSubmit }>
-            <div className={ styles.row }>
-                <label htmlFor="cityName">City name</label>
-                <input
-                    id="cityName"
-                    onChange={ ( e ) => setCityName ( e.target.value ) }
-                    value={ cityName }
-                />
-                <span className={ styles.flag }>{ emoji }</span>
-            </div>
+        <form className=" mx-auto bg-[var(--color-dark--2)] max-w-full sm:max-w-8/10 lg:max-w-full rounded-[7px] p-[2rem_3rem] w-full flex flex-col gap-[2rem] min-h-[38rem]" onSubmit={ handleSubmit }>
+            {
+                isLoadingGeocoding
+                    ? <Spinner/>
+                    : <>
+                        <div className={ styles.row }>
+                            <label htmlFor="cityName">City name</label>
+                            <input
+                                id="cityName"
+                                onChange={ ( e ) => setCityName ( e.target.value ) }
+                                value={ cityName }
+                            />
+                            <span className={ styles.flag }>
+                    <img src={ `https://flagcdn.com/${ emoji.toLowerCase () }.svg` } alt=""/></span>
+                        </div>
 
-            <div className={ styles.row }>
-                <label htmlFor="date">When did you go to { cityName }?</label>
-                <DatePicker
-                    id="date"
-                    selected={ startDate }
-                    onChange={ ( date ) => setStartDate ( date ) }
-                    popperPlacement="bottom-start"
-                    dateFormat='dd/MM/yyyy'
-                />
-            </div>
+                        <div className={ styles.row }>
+                            <label htmlFor="date">When did you go to { cityName }?</label>
+                            <DatePicker
+                                id="date"
+                                selected={ startDate }
+                                onChange={ ( date ) => setStartDate ( date ) }
+                                popperPlacement="bottom-start"
+                                dateFormat='dd/MM/yyyy'
+                            />
+                        </div>
 
-            <div className={ styles.row }>
-                <label htmlFor="notes">Notes about your trip to { cityName }</label>
-                <textarea
-                    id="notes"
-                    onChange={ ( e ) => setNotes ( e.target.value ) }
-                    value={ notes }
-                />
-            </div>
+                        <div className={ styles.row }>
+                            <label htmlFor="notes">Notes about your trip to { cityName }</label>
+                            <textarea
+                                id="notes"
+                                onChange={ ( e ) => setNotes ( e.target.value ) }
+                                value={ notes }
+                            />
+                        </div>
 
-            <div className={ styles.buttons }>
-                <Button type='primary'>Add</Button>
-                <BackButton/>
-            </div>
+                        <div className={ styles.buttons }>
+                            <Button type='primary'>Add</Button>
+                            <BackButton/>
+                        </div>
+                    </>
+            }
         </form>
     )
         ;

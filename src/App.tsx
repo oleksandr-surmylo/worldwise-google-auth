@@ -22,7 +22,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from './pages/ProtectedRoute'
 import Login from "./components/Authorization/Login/Login";
 import Register from "./components/Authorization/Register/Register";
-import TestComponent from "./components/TestComponent/TestComponent.tsx";
 
 const Homepage = lazy ( () => import("./pages/Homepage") )
 const Product = lazy ( () => import("./pages/Product") )
@@ -39,22 +38,22 @@ function App () {
                 <BrowserRouter>
                     <Suspense fallback={ <SpinnerFullPage/> }>
                         <Routes>
-                            <Route index element={ <TestComponent/> }/>
-                            {/*<Route path="product" element={ <Product/> }/>*/}
-                            {/*<Route path="pricing" element={ <Pricing/> }/>*/}
-                            {/*<Route path="login" element={ <Login/> }/>*/}
-                            {/*<Route path="register" element={ <Register/> }/>*/}
-                            {/*<Route path="app" element={*/}
-                            {/*    <ProtectedRoute>*/}
-                            {/*        <AppLayout/>*/}
-                            {/*    </ProtectedRoute> }*/}
-                            {/*>*/}
-                            {/*    <Route index element={ <Navigate replace to="cities"/> }/>*/}
-                            {/*    <Route path='cities' element={ <CityList/> }/>*/}
-                            {/*    <Route path="cities/:id" element={ <City/> }/>*/}
-                            {/*    <Route path='countries' element={ <CountryList/> }/>*/}
-                            {/*    <Route path='form' element={ <Form/> }/>*/}
-                            {/*</Route>*/}
+                            <Route index element={ <Homepage/> }/>
+                            <Route path="product" element={ <Product/> }/>
+                            <Route path="pricing" element={ <Pricing/> }/>
+                            <Route path="login" element={ <Login/> }/>
+                            <Route path="register" element={ <Register/> }/>
+                            <Route path="app" element={
+                                <ProtectedRoute>
+                                    <AppLayout/>
+                                </ProtectedRoute> }
+                            >
+                                <Route index element={ <Navigate replace to="cities"/> }/>
+                                <Route path='cities' element={ <CityList/> }/>
+                                <Route path="cities/:id" element={ <City/> }/>
+                                <Route path='countries' element={ <CountryList/> }/>
+                                <Route path='form' element={ <Form/> }/>
+                            </Route>
                             <Route path="*" element={ <PageNotFound/> }/>
                         </Routes>
                     </Suspense>

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './Map.module.css'
 import { useNavigate } from "react-router";
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvent } from 'react-leaflet'
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { useCitiesContext } from "../../contexts/CitiesContext/CitiesContext";
 import { useGeolocation } from "../../hooks/useGeolocation";
 import Button from "../Button/Button";
 import { useUrlPosition } from "../../hooks/useUrlPosition";
+import { LeafletMouseEvent } from 'leaflet';
 
 interface City {
     id: string | number;
@@ -37,7 +38,7 @@ interface UseGeolocationReturn {
 
 const Map = () => {
     const { cities } = useCitiesContext () as CitiesContext;
-    const [ mapPosition, setMapPosition ] = useState<MapPosition> ( [ 50, 12 ] )
+    const [ mapPosition, setMapPosition ] = useState<MapPosition> ( [ 49.958837161318854, 36.31547927856446 ] )
     const {
         isLoading: isLoadingPosition,
         position: geolocationPosition,
@@ -54,12 +55,13 @@ const Map = () => {
 
     useEffect ( () => {
         if ( geolocationPosition ) {
-            console.log ( 'lat', geolocationPosition.lat )
-            console.log ( 'lng', geolocationPosition.lng )
+            // console.log ( 'lat', geolocationPosition.lat )
+            // console.log ( 'lng', geolocationPosition.lng )
             setMapPosition ( [ geolocationPosition.lat, geolocationPosition.lng ] )
 
         }
     }, [ geolocationPosition ] )
+
 
     return (
         <div className={ styles.mapContainer }>
@@ -71,20 +73,28 @@ const Map = () => {
             <MapContainer
                 className={ styles.map }
                 center={ mapPosition }
-                zoom={ 13 }
+                zoom={ 15 }
                 scrollWheelZoom={ true }>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                <Marker position={ mapPosition }>
+                    <Popup>Test</Popup>
+                </Marker>
                 { cities.map ( city => (
-                    <Marker position={ [ city.position.lat, city.position.lng ] } key={ city.id }>
-                        <Popup>
-                            <img src={ city.emoji } style={ { width: '20px' } }
-                                 alt={ city.cityName }></img><span>{ city.cityName }</span>
-                        </Popup>
-                    </Marker>
-                ) ) }
+                        <Marker
+                            position={ [ city.position.lat, city.position.lng ] }
+                            key={ city.id }>
+                            <Popup>
+                                <img src={ city.emoji }
+                                     style={ { width: '20px' } }
+                                     alt={ city.cityName }></img>
+                                <span>{ city.cityName }</span>
+                            </Popup>
+                        </Marker>
+                    )
+                ) }
                 <ChangeCenter position={ mapPosition }/>
                 <DetectClick/>
             </MapContainer>
@@ -101,9 +111,8 @@ function ChangeCenter ( { position }: { position: MapPosition } ) {
 function DetectClick () {
     const navigate = useNavigate ()
 
-    useMapEvent ( 'click', ( e: { latlng: { lat: number; lng: number } } ) => {
+    useMapEvent ( 'click', ( e: LeafletMouseEvent ) => {
         navigate ( `form?lat=${ e.latlng.lat }&lng=${ e.latlng.lng }` )
-
     } )
     return null
 }

@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { AuthAction, State, AuthContextType, User } from "./AuthContextType";
 import { onAuthStateChanged } from "firebase/auth";
-// import { auth } from "../utils/firebase/firebase.utils";
+import { auth } from "../utils/firebase/firebase.utils";
 
 const initialState: State = {
     user: null,
@@ -44,26 +44,27 @@ function reducer ( state: State, action: AuthAction ): State {
     }
 }
 
+
 function AuthProvider ( { children }: { children: ReactNode } ) {
     const [ { user, isAuthenticated, error, isLoading }, dispatch ] = useReducer ( reducer, initialState )
 
-    // useEffect ( () => {
-    //     dispatch ( { type: 'loading' } );
-    //     const unsubscribe = onAuthStateChanged ( auth, ( user ) => {
-    //         if ( user !== null ) {
-    //             const { displayName, photoURL } = user;
-    //             const userData: User = {
-    //                 displayName: displayName ?? 'User',
-    //                 photoURL: photoURL ?? 'https://i.pravatar.cc/100?u=zz',
-    //             };
-    //             dispatch ( { type: 'login', payload: userData } );
-    //         } else {
-    //             dispatch ( { type: 'logout' } );
-    //         }
-    //     } );
-    //
-    //     return () => unsubscribe ();
-    // }, [] );
+    useEffect ( () => {
+        dispatch ( { type: 'loading' } );
+        const unsubscribe = onAuthStateChanged ( auth, ( user ) => {
+            if ( user !== null ) {
+                const { displayName, photoURL } = user;
+                const userData: User = {
+                    displayName: displayName ?? 'User',
+                    photoURL: photoURL ?? 'https://i.pravatar.cc/100?u=zz',
+                };
+                dispatch ( { type: 'login', payload: userData } );
+            } else {
+                dispatch ( { type: 'logout' } );
+            }
+        } );
+
+        return () => unsubscribe ();
+    }, [] );
 
 
     function login ( user: User ) {

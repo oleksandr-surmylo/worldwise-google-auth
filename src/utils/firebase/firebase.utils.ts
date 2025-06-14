@@ -1,10 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import {
     getAuth,
-    GoogleAuthProvider,
-    signInWithRedirect,
-    signInWithPopup,
-    getRedirectResult
+    GoogleAuthProvider
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -19,16 +16,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp ( firebaseConfig );
-const auth = getAuth ( app );
-const provider = new GoogleAuthProvider ();
+export const auth = getAuth ( app );
+export const provider = new GoogleAuthProvider ();
 
 provider.setCustomParameters ( {
     prompt: 'select_account'
 } );
 
-export const signWithGoogleRedirect = () => signInWithRedirect ( auth, provider )
-export const signWithGooglePopup = () => signInWithPopup ( auth, provider )
-export const getRedirectGoogleResult = () => getRedirectResult ( auth )
 
 
 

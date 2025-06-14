@@ -1,21 +1,23 @@
-import { ReactNode, MouseEvent } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import styles from './Button.module.css'
 
 type PropsButton = {
     children: ReactNode
+    className?: string;
     onClick?: ( e: MouseEvent ) => void
     disabled?: boolean
     isLoginMode?: boolean
     type?: 'primary' | 'back' | 'small' | 'position'
 }
 
-const Button = ( { children, onClick, type, disabled }: PropsButton ) => {
+const Button = ( { children, className, onClick, type, disabled }: PropsButton ) => {
     const typeClass = type ? styles[ type ] : '';
 
     return (
-        <button className={ `${ styles.btn } ${ typeClass }` }
+        <button className={ `${ styles.btn } ${ typeClass } ${ className }` }
                 onClick={ onClick }
-                disabled={ disabled }>
+                disabled={ disabled }
+        >
             { children }
         </button>
     );
