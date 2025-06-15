@@ -5,7 +5,7 @@ import User from "../components/User/User";
 
 const AppLayout = () => {
     return (
-        <div className="flex flex-col relative h-screen p-[2.4rem] lg:flex-row">
+        <div className="flex flex-col relative h-dvh p-[2.4rem] lg:flex-row">
             <Sidebar/>
             <Map/>
             <User/>
