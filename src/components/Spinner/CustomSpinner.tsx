@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styles from './CustomSpinner.module.css';
 
-const CustomSpinner = ( { showSpinner, children } ) => {
+
+type SpinnerProps = {
+    children: ReactNode;
+    showSpinner: boolean;
+}
+
+const CustomSpinner = ( { showSpinner, children }: SpinnerProps ) => {
     return (
         <>
             <div className={ `${ styles.spinner } ${ showSpinner ? styles.active : '' }` }></div>
