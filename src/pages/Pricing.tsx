@@ -9,12 +9,12 @@ export default function Pricing () {
             <section className="flex flex-col-reverse max-w-[90rem]
             items-center gap-28 my-24 mx-auto md:flex-row ">
                 <div className="text-center md:text-left flex-1">
-                    <h2 className="text-[4rem] leading-[1.2] mb-12">
+                    <h2 className="text-[2.6rem] leading-[1.2] mb-12 md:text-[4rem]">
                         Simple pricing.
                         <br/>
                         Just $9/month.
                     </h2>
-                    <p className="text-[1.6rem] mb-8">
+                    <p className="text-[1.4rem] mb-8 md:text-[1.6rem]">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae vel
                         labore mollitia iusto. Recusandae quos provident, laboriosam fugit
                         voluptatem iste.
