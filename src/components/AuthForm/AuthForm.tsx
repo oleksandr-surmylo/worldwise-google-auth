@@ -183,9 +183,9 @@ const AuthForm = () => {
                         </CustomSpinner>
                     </Button>
                 </div>
-                <div>
-                    <span className="text-md md:text-xl">{ isRegisterPage ? hasAccountText : noAccountText }</span>
-                    <Link to={ switchLink } className="text-xl decoration-0 text-[var(--color-brand--2)] ml-2.5 md:text-2xl">{ switchText }</Link>
+                <div className="flex items-center">
+                    <span className="text-md !leading-none md:text-xl">{ isRegisterPage ? hasAccountText : noAccountText }</span>
+                    <Link to={ switchLink } className="text-xl !leading-none decoration-0 text-[var(--color-brand--2)] ml-2.5 md:text-2xl">{ switchText }</Link>
                 </div>
             </div>
 
