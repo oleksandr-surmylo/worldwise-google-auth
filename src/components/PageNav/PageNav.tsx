@@ -76,7 +76,7 @@ const PageNav = () => {
                 </li>
                 <li>
                     <NavLink to={ '/login' } onClick={ () => setIsShowed ( false ) }
-                             className="inline-block text-3xl py-[0.8rem] px-[2rem]
+                             className="inline-block text-3xl leading-none py-[1rem] px-[2rem]
                              bg-[var(--color-brand--2)] text-[var(--color-dark--0)] rounded-xl md:text-2xl">Login</NavLink>
                 </li>
             </ul>
