@@ -1,6 +1,4 @@
-.title {
-    text-align: center;
-}
+
 
 .login {
     margin: 2.5rem;
@@ -86,4 +84,5 @@
     font-size: 1.2rem;
     font-weight: 500;
     letter-spacing: 0.25px;
+    line-height: 1;
 }

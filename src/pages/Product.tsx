@@ -8,7 +8,7 @@ export default function Product () {
             <PageNav/>
             <section className="flex flex-col-reverse max-w-[90rem]
             items-center gap-28 my-24 mx-auto md:flex-row">
-                <div className="flex-1 max-w-[80%]">
+                <div className="flex-1 max-w-[70%]">
                     <img
                         className="w-full"
                         src={ img1 }

@@ -2,10 +2,11 @@
 
 .nav ul a:link,
 .nav ul a:visited {
+    display: inline-block;
     text-decoration: none;
     color: var(--color-light--2);
     text-transform: uppercase;
-    font-size: 1.5rem;
+    /*font-size: 1.5rem;*/
     font-weight: 600;
 }
 

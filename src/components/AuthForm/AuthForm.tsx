@@ -4,11 +4,7 @@ import Button from "../Button/Button";
 import CustomSpinner from "../Spinner/CustomSpinner";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/firebase/firebase.utils";
 import { User } from "../../contexts/AuthContextType";
 
@@ -18,12 +14,13 @@ const AuthForm = () => {
 
     const { isAuthenticated, login } = useAuth ()
 
-    const [ email, setEmail ] = useState ( "" );
-    const [ password, setPassword ] = useState ( "" );
-    const [ isLoading, setIsLoading ] = useState ( false );
-    const [ showSpinner, setShowSpinner ] = useState ( false );
+    const [ email, setEmail ] = useState<string> ( "" );
+    const [ confirmEmail, setConfirmEmail ] = useState<string> ( "" );
+    const [ password, setPassword ] = useState<string> ( "" );
+    const [ isLoading, setIsLoading ] = useState<boolean> ( false );
+    const [ showSpinner, setShowSpinner ] = useState<boolean> ( false );
 
-    const [ error, setError ] = useState ( '' );
+    const [ error, setError ] = useState<string> ( '' );
 
     const navigate = useNavigate ()
 
@@ -33,9 +30,13 @@ const AuthForm = () => {
     const title = isLoginPage ? 'Login' : 'Register';
     const buttonText = isLoginPage ? 'Sign in' : 'Sign up';
 
+    const noAccountText = "Don't have an account?";
+    const hasAccountText = "Already have an account?";
+
     const switchLink = isLoginPage ? '/register' : '/login';
     const switchText = isLoginPage ? 'Sign up' : 'Sign in';
 
+    const [ showConfirmEmail, setShowConfirmEmail ] = useState ( false );
 
     useEffect ( () => {
         if ( isAuthenticated ) {
@@ -48,6 +49,17 @@ const AuthForm = () => {
             setError ( '' );
         }
     }, [ email, password ] );
+
+    useEffect ( () => {
+        if ( isRegisterPage ) {
+            const timer = setTimeout ( () => {
+                setShowConfirmEmail ( true );
+            }, 10 ); // Ensure the element is rendered in the DOM before applying CSS transitions.
+            return () => clearTimeout ( timer );
+        } else {
+            setShowConfirmEmail ( false ); // скрываем сразу при переходе на login
+        }
+    }, [ isRegisterPage ] );
 
     const isInputValid = email.length > 5 && password.length > 5
 
@@ -82,6 +94,10 @@ const AuthForm = () => {
 
     async function handleSubmit ( e: FormEvent<HTMLFormElement> ) {
         e.preventDefault ()
+        if ( isRegisterPage && email !== confirmEmail ) {
+            setError ( "Emails do not match" );
+            return;
+        }
         if ( !isInputValid ) {
             setError ( "Email and password should have at least 5 symbols" );
             return
@@ -116,12 +132,14 @@ const AuthForm = () => {
     }
 
     return (
-        <form className="bg-[var(--color-dark--2)] rounded-[7px] p-8 px-12 flex flex-col gap-8 w-[42rem] sm:w-[48rem] mt-60 mx-auto backdrop-blur-[20px]" onSubmit={ handleSubmit }>
-            <h1 className={ styles.title }>
+        <form
+            className="bg-[var(--color-dark--2)] rounded-[7px] p-8 px-12 flex flex-col gap-8 max-w- sm:w-[48rem] mt-60 mx-auto backdrop-blur-[20px]"
+            onSubmit={ handleSubmit }>
+            <h1 className="text-center font-semibold text-3xl uppercase tracking-wide">
                 { title }
             </h1>
-            { error && <h2 style={ { color: 'tomato' } }>{ error }</h2> }
-            <div className={ styles.row }>
+            { error && <h1 className="text-[tomato] text-2xl">{ error }</h1> }
+            <div className="flex flex-col gap-2 ">
                 <label htmlFor="email">Email address</label>
                 <input
                     type="email"
@@ -131,8 +149,23 @@ const AuthForm = () => {
                     value={ email }
                 />
             </div>
-
-            <div className={ styles.row }>
+            <div
+                className={ `flex flex-col gap-2  
+                        ${ isRegisterPage ? 'visible' : ' invisible overflow-hidden' }
+                        ${ showConfirmEmail ? 'max-h-[7.5rem] opacity-100' : 'max-h-0 opacity-0' } 
+                        transition-all ease duration-300` }>
+                <label className={ `${ isRegisterPage ? 'text-2xl' : '!text-[0px]' }` } htmlFor="confirm-email">Confirm
+                    Email
+                    address</label>
+                <input
+                    type="email"
+                    placeholder='example@example.com'
+                    id="confirm-email"
+                    onChange={ ( e ) => setConfirmEmail ( e.target.value ) }
+                    value={ confirmEmail }
+                />
+            </div>
+            <div className="flex flex-col gap-2">
                 <label htmlFor="password">Password</label>
                 <input
                     type="password"
@@ -151,8 +184,8 @@ const AuthForm = () => {
                     </Button>
                 </div>
                 <div>
-                    <span>Don't have an account?</span>
-                    <Link to={ switchLink } className={ styles.link }>{ switchText }</Link>
+                    <span className="text-md md:text-xl">{ isRegisterPage ? hasAccountText : noAccountText }</span>
+                    <Link to={ switchLink } className="text-xl decoration-0 text-[var(--color-brand--2)] ml-2.5 md:text-2xl">{ switchText }</Link>
                 </div>
             </div>
 

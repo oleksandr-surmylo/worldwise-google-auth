@@ -20,7 +20,7 @@ export default function Pricing () {
                         voluptatem iste.
                     </p>
                 </div>
-                <div className="flex-1 max-w-[80%]">
+                <div className="flex-1 max-w-[70%]">
                     <img src={ img2 } alt="overview of a large city with skyscrapers" className="w-full"/>
                 </div>
             </section>

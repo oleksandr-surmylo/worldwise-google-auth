@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 
 function Logo () {
     return (
-        <Link to='/' className="">
+        <Link to='/' className="cursor-pointer">
             <img
                 src={ logo }
                 alt="WorldWise logo"
