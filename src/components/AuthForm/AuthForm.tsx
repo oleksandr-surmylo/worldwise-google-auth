@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import styles from "./AuthForm.module.css";
 import Button from "../Button/Button";
 import CustomSpinner from "../Spinner/CustomSpinner";
@@ -131,6 +131,7 @@ const AuthForm = () => {
 
     }
 
+
     return (
         <form
             className="bg-[var(--color-dark--2)] rounded-[7px] p-8 px-12 flex flex-col gap-8 max-w- sm:w-[48rem] mt-60 mx-auto backdrop-blur-[20px]"
@@ -152,7 +153,7 @@ const AuthForm = () => {
             <div
                 className={ `flex flex-col gap-2  
                         ${ isRegisterPage ? 'visible' : ' invisible overflow-hidden' }
-                        ${ showConfirmEmail ? 'max-h-[7.5rem] opacity-100' : 'max-h-0 opacity-0' } 
+                        ${ showConfirmEmail ? 'max-h-[7.5rem] opacity-100 -my-0' : 'max-h-0 opacity-0 -my-4' } 
                         transition-all ease duration-300` }>
                 <label className={ `${ isRegisterPage ? 'text-2xl' : '!text-[0px]' }` } htmlFor="confirm-email">Confirm
                     Email
@@ -184,8 +185,10 @@ const AuthForm = () => {
                     </Button>
                 </div>
                 <div className="flex items-center">
-                    <span className="text-md !leading-none md:text-xl">{ isRegisterPage ? hasAccountText : noAccountText }</span>
-                    <Link to={ switchLink } className="text-xl !leading-none decoration-0 text-[var(--color-brand--2)] ml-2.5 md:text-2xl">{ switchText }</Link>
+                    <span
+                        className="text-md !leading-none md:text-xl">{ isRegisterPage ? hasAccountText : noAccountText }</span>
+                    <Link to={ switchLink }
+                          className="text-xl !leading-none decoration-0 text-[var(--color-brand--2)] ml-2.5 md:text-2xl">{ switchText }</Link>
                 </div>
             </div>
 

@@ -5,8 +5,8 @@ import { Outlet } from "react-router";
 
 const Sidebar = () => {
     return (
-        <div className="h-[50vh] flex flex-col items-start basis-[56rem] py-12 px-20
-        bg-[var(--color-dark--1)] lg:h-auto">
+        <div className="max-h-[50vh] flex flex-col items-start basis-[56rem] py-12 px-20
+        bg-[var(--color-dark--1)] lg:max-h-dvh">
             <Logo/>
             <AppNav/>
 
